@@ -5,8 +5,8 @@ window.onload = function () {
 }
 
 function fadeout() {
-    document.querySelector('.preloader').style.opacity = '0';
-    document.querySelector('.preloader').style.display = 'none';
+    // document.querySelector('.preloader').style.opacity = '0';
+    // document.querySelector('.preloader').style.display = 'none';
 }
 
 
@@ -15,7 +15,8 @@ $(function() {
     "use strict";
 
     /*=============================================
-    =                  Sticky                     =
+    =                  Sticky          
+    minAmount           =
     =============================================*/
 
 	$(window).on('scroll', function(event) {    
@@ -790,16 +791,16 @@ $(function() {
 	$( "#slider-range" ).slider({
         range: true,
         min: 0,
-        max: 2000,
+        max: 2000000,
         values: [ 300, 1200 ],
         slide: function( event, ui ) {
-            $( "#minAmount" ).val( "$" + ui.values[ 0 ] );
-            $( "#maxAmount" ).val( "$" + ui.values[ 1 ] );
+            $( "#minAmount" ).val( "FCFA " + ui.values[ 0 ] );
+            $( "#maxAmount" ).val( "FCFA " + ui.values[ 1 ] );
         }
     });
 
-    $( "#minAmount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) );
-    $( "#maxAmount" ).val( "$" + $( "#slider-range" ).slider( "values", 1 ) );
+    $( "#minAmount" ).val( "FCFA " + $( "#slider-range" ).slider( "values", 0 ) );
+    $( "#maxAmount" ).val( "FCFA " + $( "#slider-range" ).slider( "values", 1 ) );
 
 
     /*-------- Slider Range 2 --------*/
@@ -807,7 +808,7 @@ $(function() {
 	$( "#slider-range2" ).slider({
         range: true,
         min: 0,
-        max: 2000,
+        max: 2000000,
         values: [ 300, 1200 ],
         slide: function( event, ui ) {
             $( "#minAmount2" ).val( "$" + ui.values[ 0 ] );

@@ -8,7 +8,6 @@ import { Layout } from '../Layout'
 export const AddProduct = () => {
   const [categories,setCategories] = useState([])
   const [sousCategorie,setSousCategorie] = useState([])
-  const [listProduits,setListProduits] = useState([])
   useEffect(()=>{
     axios({
       method:'GET',
@@ -28,12 +27,6 @@ export const AddProduct = () => {
       setSousCategorie(response.data)
     })
     .catch(e=>console.log('e'))
-    axios({
-      method:'GET',
-      url:'https://apptatout.herokuapp.com/produit/'
-    })
-    .then(response=>setListProduits(response.data))
-    .catch(e=>console.log('h'))
   },[])
 
   if(isAuth()){
@@ -87,9 +80,10 @@ export const AddProduct = () => {
       setProducts({...products, [e.target.name]: e.target.files[0], })
     }
     else{
-      setProducts({...products, [e.target.name]: e.target.value.trim(), })
+      setProducts({...products, [e.target.name]: e.target.value, })
     }
   }
+  
   const handleSubmit = e => {
     e.preventDefault()
     let formData = new FormData()
@@ -113,8 +107,12 @@ export const AddProduct = () => {
     })
     .then(response=>{
       toast.success(`${designation} ajouté avec success`)
+      setProducts(initialFormState)
     })
-    .catch(error=>console.log(error))
+    .catch(e=>{
+      toast.error(e)
+      console.log(e)
+    })
   }
     return(
         <Fragment>
@@ -143,6 +141,7 @@ export const AddProduct = () => {
                   <input
                     className="form-control"
                     type="text"
+                    value={`${designation}`}
                     placeholder="Nom produit"
                     name="designation"
                     onChange={handleChange}
@@ -153,6 +152,7 @@ export const AddProduct = () => {
                   <input
                     className="form-control"
                     type="number"
+                    value={qte_produit}
                     placeholder="Quantité"
                     name="qte_produit"
                     onChange={handleChange}
@@ -163,6 +163,7 @@ export const AddProduct = () => {
                   <input
                     className="form-control"
                     type="number"
+                    value={prix}
                     placeholder="prix"
                     name="prix"
                     onChange={handleChange}
@@ -174,6 +175,7 @@ export const AddProduct = () => {
                     className="form-control"
                     rows="4"
                     placeholder="Enter your address"
+                    value={caracteristique}
                     name="caracteristique"
                     onChange={handleChange}
                   ></textarea>
@@ -182,7 +184,7 @@ export const AddProduct = () => {
                   <label className="control-label">Nom boutique</label>
                   <input
                     className="form-control"
-                    type="text"
+                    type="hidden"
                     value={boutique_nom}
                     name="boutique_nom"
                     onChange={handleChange}
@@ -194,12 +196,13 @@ export const AddProduct = () => {
                   <select
                     className="form-control"
                     type="text"
+                    value={categorie}
                     name="categorie"
                     onChange={handleChange}
                   >
                      <option>veuillez choisir un categories</option>
                     {categories.map(categorie=>(
-                      <option key={categorie.id} value={categorie.id}>{categorie.nom_cat}</option>
+                      <option key={categorie.id} value={(categorie.id)}>{categorie.nom_cat}</option>
                     ))}
                   </select>
                 </div>
@@ -208,18 +211,20 @@ export const AddProduct = () => {
                   <select
                     className="form-control"
                     type="text"
+                    value={sous_categorie}
                     name="sous_categorie"
                     value={sous_categorie}
                     onChange={handleChange}
                   >
-                    <option>veuillez choisir un categories</option>
-                    {sousCategorie.map(sousCategori=>(
-                      <option key={sousCategori.id} value={sousCategori.id}>{sousCategori.designation}</option>
-                    ))}
+                    <option>veuillez choisir un sous categories</option>
+                    {sousCategorie.map(sousCategori=>{
+                      if(sousCategori.categorie === Number(categorie)){
+                        return <option key={sousCategori.id} value={sousCategori.id}>{sousCategori.designation}</option>
+                      }
+                    })}
                   </select>
                 </div>
                 <div className="form-group">
-                  {/* <label className="control-label">user id</label> */}
                   <input
                     className="form-control"
                     type="hidden"

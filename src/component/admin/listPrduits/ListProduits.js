@@ -1,9 +1,11 @@
-import axios from 'axios'
 import React, { Fragment, useEffect, useState } from 'react'
+import axios from 'axios'
 import swal from 'sweetalert'
 import { Link } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {isAuth,signout} from '../../api/apiAuth'
+import jwt from 'jsonwebtoken'
 import { Layout } from '../Layout'
 
 export const ListProduits = () =>{
@@ -79,19 +81,23 @@ export const ListProduits = () =>{
                 </thead>
                 <tbody>
                     {
-                    produits.map(produit=>(
-                        <tr>
-                            <td>{produit.id}</td>
-                            <td><img src={"https://apptatout.herokuapp.com"+produit.photo} width="50px" height="50px"/></td>
-                            <td>{produit.designation}</td>
-                            <td>{produit.date_creation}</td>
-                            <td>{produit.qte_produit}</td>
-                            <td>
-                                <Link className="btn btn-warning">m</Link>
-                                <button onClick={()=>confirmeDelete(produit.id)} className="btn btn-danger">s</button>
-                            </td>
-                      </tr>
-                    ))
+                    produits.map(produit=>{
+                       if(produit.user === jwt.decode(isAuth()).id){
+                        return(
+                          <tr>
+                          <td>{produit.id}</td>
+                          <td><img src={"https://apptatout.herokuapp.com"+produit.photo} width="50px" height="50px"/></td>
+                          <td>{produit.designation}</td>
+                          <td>{produit.date_creation}</td>
+                          <td>{produit.qte_produit}</td>
+                          <td>
+                              <Link to={"/modifier-produit" + produit.id} className="btn btn-warning">m</Link>
+                              <button onClick={()=>confirmeDelete(produit.id)} className="btn btn-danger">s</button>
+                          </td>
+                        </tr>
+                        )
+                       }
+                    })
                     }
                 </tbody>
               </table>
@@ -99,7 +105,6 @@ export const ListProduits = () =>{
           </div>
         </div>
       </div>
-     
     </main>
         </Fragment>
     )

@@ -35,7 +35,7 @@ export const AddEvent = () => {
       setEvent({...events, [e.target.name]: e.target.files[0], })
     }
     else{
-      setEvent({...events, [e.target.name]: e.target.value.trim(), })
+      setEvent({...events, [e.target.name]: e.target.value, })
       console.log('le reste')
     }
   }
@@ -86,8 +86,8 @@ export const AddEvent = () => {
                     class="form-control"
                     type="text"
                     placeholder="Titre d'evenement"
-                    name="titre"
                     value={titre}
+                    name="titre"
                     onChange={handleChange}
                   />
                 </div>
@@ -97,8 +97,8 @@ export const AddEvent = () => {
                     class="form-control"
                     type="text"
                     placeholder="description"
-                    name="description"
                     value={description}
+                    name="description"
                     onChange={handleChange}
                   />
                 </div>

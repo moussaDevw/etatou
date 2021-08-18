@@ -43,48 +43,30 @@ export const DashboardSuperAdmin = () =>{
         <div class="col-md-6 col-lg-3">
           <div class="widget-small primary coloured-icon">
             <i class="icon fa fa-users fa-3x"></i>
-            <Link to="/admins/list-boutique-ative" class="info">
+            <Link to="/admins/listBoutique" class="info">
               <h4>Nombre de boutique</h4>
-              <p><b>{users.length}</b></p>
+              <a><a>{users.length}</a></a>
             </Link>
           </div>
         </div>
-        <Link class="col-md-6 col-lg-3">
+        <Link to="/admins/list-boutique-ative" class="col-md-6 col-lg-3">
           <div class="widget-small info coloured-icon">
             <i class="icon fa fa-thumbs-o-up fa-3x"></i>
             <div class="info">
               <h4>Boutique active</h4>
-              <p><b>{bActive.length}</b></p>
+              <a>{bActive.length}</a>
             </div>
           </div>
         </Link>
-        <Link class="col-md-6 col-lg-3">
+        <Link to="/admins/list-boutique-inactif" class="col-md-6 col-lg-3">
           <div class="widget-small info coloured-icon">
             <i class="icon fa fa-thumbs-o-up fa-3x"></i>
             <div class="info">
               <h4>Boutique inactive</h4>
-              <p><b>{bInactive.length}</b></p>
+              <a><a>{bInactive.length}</a></a>
             </div>
           </div>
         </Link>
-        <div class="col-md-6 col-lg-3">
-          <div class="widget-small warning coloured-icon">
-            <i class="icon fa fa-files-o fa-3x"></i>
-            <div class="info">
-              <h4>Archivez</h4>
-              <p><b>10</b></p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-3">
-          <div class="widget-small danger coloured-icon">
-            <i class="icon fa fa-star fa-3x"></i>
-            <div class="info">
-              <h4>Stock</h4>
-              <p><b>500</b></p>
-            </div>
-          </div>
-        </div>
       </div>
     </main>
     </body>

@@ -1,7 +1,9 @@
 import React, { Fragment,useState } from 'react'
+import {authenticate} from '../api/apiAuth'
 import axios from 'axios'
-import {Link} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify'
+import { Layout } from '../menu/Layout'
 export const CreerBoutique = () =>{
     const [users,setUsers] = useState({
         user_name:'',
@@ -45,8 +47,8 @@ export const CreerBoutique = () =>{
             password
           }
         })
-        .then(response=>{
-            toast.success('Votre boutique est créer avec success! veuillez vous connecter svp')
+        .then((response)=>{
+            setUsers({...users,user_name:'',first_name:'',last_name:'',telephone:'',email:'',nom_boutique:'',adresse_boutique:'',tel_boutique:'',password:''})
         }).catch(e=>{
             console.log('not okk')
         })
@@ -54,6 +56,7 @@ export const CreerBoutique = () =>{
     return(
         <Fragment>
             <ToastContainer />
+            <Layout />
         <section class="breadcrumbs-wrapper pt-50 pb-50 bg-primary-4">
             <div class="container">
                 <div class="row">
@@ -89,13 +92,13 @@ export const CreerBoutique = () =>{
                                     <div class="col-sm-6">
                                         <div class="form-input">
                                             <label>Nom d'utilisateur</label>
-                                            <input type="text" onChange={handleChange('user_name')} placeholder="Nom d'utilisateur" />
+                                            <input type="text" onChange={handleChange('user_name')} placeholder="Nom d'utilisateur" required/>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-input form">
                                             <label>Prénom</label>
-                                            <input type="text" onChange={handleChange('first_name')} placeholder="Prénom" />
+                                            <input type="text" onChange={handleChange('first_name')} placeholder="Prénom" required/>
                                         </div>
                                     </div>
                                 </div>
@@ -103,13 +106,13 @@ export const CreerBoutique = () =>{
                                     <div class="col-sm-6">
                                         <div class="form-input">
                                             <label>Nom de famille</label>
-                                            <input type="text" onChange={handleChange('last_name')} placeholder="Nom d'utilisateur" />
+                                            <input type="text" onChange={handleChange('last_name')} placeholder="Nom d'utilisateur" required/>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-input form">
                                             <label>Téléphone</label>
-                                            <input type="tel" onChange={handleChange('telephone')} placeholder="770000000" />
+                                            <input type="tel" onChange={handleChange('telephone')} placeholder="770000000" required/>
                                         </div>
                                     </div>
                                 </div>
@@ -117,7 +120,7 @@ export const CreerBoutique = () =>{
                                 <div class="single-form form-default form-border text-left">
                                     <label><font style={{verticalAlign: 'inherit'}}><font style={{verticalAlign: 'inherit'}}>Adresse e-mail</font></font></label>
                                     <div class="form-input">
-                                        <input type="email" onChange={handleChange('email')} placeholder="user@email.com" />
+                                        <input type="email" onChange={handleChange('email')} placeholder="user@email.com" required/>
                                         <i class="mdi mdi-email"></i>
                                     </div>
                                 </div>
@@ -126,13 +129,13 @@ export const CreerBoutique = () =>{
                                     <div class="col-sm-6">
                                         <div class="form-input">
                                             <label>Nom boutique</label>
-                                            <input type="text" onChange={handleChange('nom_boutique')} placeholder="Nom boutique" />
+                                            <input type="text" onChange={handleChange('nom_boutique')} placeholder="Nom boutique" required/>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-input form">
                                             <label>Adresse Boutique</label>
-                                            <input type="text" onChange={handleChange('adresse_boutique')} placeholder="Adresse Boutique" />
+                                            <input type="text" onChange={handleChange('adresse_boutique')} placeholder="Adresse Boutique" required/>
                                         </div>
                                     </div>
                                 </div>
@@ -140,7 +143,7 @@ export const CreerBoutique = () =>{
                                     <div class="col-sm-6">
                                         <div class="form-input">
                                             <label>Téléphone boutique</label>
-                                            <input type="tel" onChange={handleChange('tel_boutique')} placeholder="7700000000" />
+                                            <input type="tel" onChange={handleChange('tel_boutique')} placeholder="7700000000" required/>
                                         </div>
                                     </div>
                                 </div>
@@ -148,18 +151,17 @@ export const CreerBoutique = () =>{
                                 <div class="single-form form-default form-border text-left">
                                 <label><font style={{verticalAlign: 'inherit'}}><font style={{verticalAlign: 'inherit'}}>Choisissez un mot de passe</font></font></label>
                                 <div class="form-input">
-                                <input id="password-3" type="password" onChange={handleChange('password')} placeholder="Mot de passe" />
+                                <input id="password-3" type="password" onChange={handleChange('password')} placeholder="Mot de passe" required/>
                                 <i class="mdi mdi-lock"></i>
                                 <span toggle="#password-3" class="mdi mdi-eye-outline toggle-password"></span>
                                 </div>
                                 </div>
                                 <div class="single-form">
-                                <button class="main-btn primary-btn"><font style={{verticalAlign: 'inherit'}}><font style={{verticalAlign: 'inherit'}}>S'inscrire</font></font></button>
+                                <button class="main-btn primary-btn mb-4" style={{width:'100%'}}><font style={{verticalAlign: 'inherit'}}><font style={{verticalAlign: 'inherit'}}>S'inscrire</font></font></button>
                                 </div>
                             </form>
                             </div>
-                            <p class="login"><font style={{verticalAlign: 'inherit'}}><font style={{verticalAlign: 'inherit'}}>Avoir un compte? </font></font><a href="login-page.html"><font style={{verticalAlign: 'inherit'}}><font style={{verticalAlign: 'inherit'}}>Connexion</font></font></a></p>
-                            <p class="account"><font style={{verticalAlign: 'inherit'}}><font style={{verticalAlign: 'inherit'}}>Ou alors</font></font></p>
+                            <p class="login"><font style={{verticalAlign: 'inherit'}}><font style={{verticalAlign: 'inherit'}}>Avoir un compte? </font></font><Link to="/connexion"><font style={{verticalAlign: 'inherit'}}><font style={{verticalAlign: 'inherit'}}>Connexion</font></font></Link></p>
                         </div>
                     </div>
                 </div>

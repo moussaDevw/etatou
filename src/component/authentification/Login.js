@@ -1,8 +1,9 @@
-import React, { Fragment,useState } from 'react'
+import React, { Fragment,useEffect,useState } from 'react'
 import axios from 'axios'
 import {Link, Redirect} from 'react-router-dom'
 import jwt from 'jsonwebtoken'
 import {isAuth,authenticate} from '../api/apiAuth'
+import { Layout } from '../menu/Layout'
 export const Login = () =>{
     const [users, setUsers] = useState({
         email:'',
@@ -32,6 +33,16 @@ export const Login = () =>{
         .catch(e=>console.log(error))
         spinners = spinner()
       }
+      useEffect(()=>{
+          let form = document.querySelectorAll(".red");
+        for(let i = 0; i < form.length;i++){
+            form[i].addEventListener('keydown',(e)=>{
+                if(e.target.value.length === 0){
+                    
+                }
+            })
+        }
+      },[])
       const connRedirect = () =>{
           if(isAuth() && jwt.decode(isAuth()).is_admin === true)
           {
@@ -41,6 +52,8 @@ export const Login = () =>{
               return <Redirect to="/admin/tableau-de-bord" />
           }else if(isAuth()){
               return <Redirect to="/" />
+          }else if(isAuth() && jwt.decode(isAuth()).is_celler === false && jwt.decode(isAuth()).is_admin === false){
+
           }
       }
       var spinners;
@@ -54,6 +67,7 @@ export const Login = () =>{
     return(
         <Fragment>
             {connRedirect()}
+            <Layout />
         <section class="breadcrumbs-wrapper pt-50 pb-50 bg-primary-4">
             <div class="container">
                 <div class="row">
@@ -84,25 +98,23 @@ export const Login = () =>{
                                 <div class="single-form form-default form-border text-left">
                                     <label><font style={{verticalAlign: 'inherit'}}><font style={{verticalAlign: 'inherit'}}>Adresse e-mail</font></font></label>
                                     <div class="form-input">
-                                    <input type="email" onChange={handleChange('email')} placeholder="user@email.com" />
+                                    <input type="email" onChange={handleChange('email')} placeholder="user@email.com" className="red" required/>
                                     <i class="mdi mdi-email"></i>
                                 </div>
                                 </div>
                                 <div class="single-form form-default form-border text-left">
                                     <label><font style={{verticalAlign: 'inherit'}}><font style={{verticalAlign: 'inherit'}}>Mot de passe</font></font></label>
                                     <div class="form-input">
-                                        <input id="password-3" type="password" onChange={handleChange('password')} placeholder="Mot de passe" />
-                                        <i class="mdi mdi-lock"></i>
-                                        <span toggle="#password-3" class="mdi mdi-eye-outline toggle-password"></span>
+                                        <input id="password-3" type="password" onChange={handleChange('password')} placeholder="Mot de passe" className="red" required/>
                                     </div>
                                 </div>
                                 <div class="single-form">
-                                    <button class="main-btn primary-btn"><font style={{verticalAlign: 'inherit'}}><font style={{verticalAlign: 'inherit'}}>S'inscrire</font></font></button>
+                                    <button class="main-btn primary-btn mb-4" style={{width:'100%'}}><font style={{verticalAlign: 'inherit'}}><font style={{verticalAlign: 'inherit'}}>Se connecte</font></font></button>
                                 </div>
                             </form>
                             </div>
                             {spinners}
-                            <p class="login"><font style={{verticalAlign: 'inherit'}}><font style={{verticalAlign: 'inherit'}}>Vous n'avez pas de compte? </font></font><a href="login-page.html"><font style={{verticalAlign: 'inherit'}}><font style={{verticalAlign: 'inherit'}}>Connexion</font></font></a></p>
+                            <p class="login"><font style={{verticalAlign: 'inherit'}}><font style={{verticalAlign: 'inherit'}}>Vous n'avez pas de boutique? </font></font><Link to="/creer-boutique"><font style={{verticalAlign: 'inherit'}}><font style={{verticalAlign: 'inherit'}}>clique ici</font></font></Link></p>
                         </div>
                     </div>
                 </div>

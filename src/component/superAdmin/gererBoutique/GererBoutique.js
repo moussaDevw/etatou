@@ -1,68 +1,73 @@
-import React, { Fragment } from 'react'
-import {LayoutAdmin} from '../LayoutAdmin'
+import React,{useEffect, useState} from 'react'
+import {Link} from 'react-router-dom'
+import { LayoutAdmin } from '../LayoutAdmin'
+import axios from 'axios'
+
 export const GererBoutique = () => {
+  const [users,setUsers] = useState([])
+  useEffect(()=>{
+    axios({
+      method:'GET',
+      url:'https://apptatout.herokuapp.com/api/users/'
+    },[])
+    .then(response=>setUsers(response.data))
+    .catch(e=>console.log(e))
+  })
+  // nombre de boutique active
+  let bActive = []
+  let bInactive = []
+  users.map(user=>{
+    if(user.is_celler === true){
+     return bActive.push(1)
+    }else{
+      return bInactive.push(1)
+    }
+  })
     return(
       <div>
       <body class="app sidebar-mini rtl">
 
     <LayoutAdmin />
     <main class="app-content">
-    <div class="app-title">
-      <div>
-        <h1><i class="fa fa-dashboard"></i>Listes Boutiques</h1>
-      </div>
-      <ul class="app-breadcrumb breadcrumb">
-        <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-        <li class="breadcrumb-item"><a href="#">Listes Boutiques</a></li>
-      </ul>
-    </div>
     <div class="row">
-      <div class="col-md-6 col-lg-3">
-        <div class="widget-small primary coloured-icon">
-          <i class="icon fa fa-users fa-3x"></i>
-          <div class="info">
-            <h4>Nombre de Boutique</h4>
-            <p><b>5</b></p>
+        <div class="col-md-6 col-lg-3">
+          <div class="widget-small primary coloured-icon">
+            <i class="icon fa fa-users fa-3x"></i>
+            <Link to="/admins/listBoutique" class="info">
+              <h4>Nombre de boutique</h4>
+              <a><b>{users.length}</b></a>
+            </Link>
           </div>
         </div>
-      </div>
-      <div class="col-md-6 col-lg-3">
-        <div class="widget-small info coloured-icon">
-          <i class="icon fa fa-thumbs-o-up fa-3x"></i>
-          <div class="info">
-            <h4>Boutique actifs</h4>
-            <p><b>25</b></p>
+        <Link to="/admins/list-boutique-ative" class="col-md-6 col-lg-3">
+          <div class="widget-small info coloured-icon">
+            <i class="icon fa fa-thumbs-o-up fa-3x"></i>
+            <div class="info">
+              <h4>Boutique active</h4>
+              <a><b>{bActive.length}</b></a>
+            </div>
+          </div>
+        </Link>
+        <Link to="/admins/list-boutique-inactif" class="col-md-6 col-lg-3">
+          <div class="widget-small info coloured-icon">
+            <i class="icon fa fa-thumbs-o-up fa-3x"></i>
+            <div class="info">
+              <h4>Boutique inactive</h4>
+              <a><b>{bInactive.length}</b></a>
+            </div>
+          </div>
+        </Link>
+        <div class="col-md-6 col-lg-3">
+          <div class="widget-small warning coloured-icon">
+            <i class="icon fa fa-files-o fa-3x"></i>
+            <div class="info">
+              <h4>Archivez</h4>
+              <a><b>10</b></a>
+            </div>
           </div>
         </div>
+        
       </div>
-      <div class="col-md-6 col-lg-3">
-        <div class="widget-small info coloured-icon">
-          <i class="icon fa fa-thumbs-o-up fa-3x"></i>
-          <div class="info">
-            <h4>Boutique inactifs</h4>
-            <p><b>25</b></p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-3">
-        <div class="widget-small warning coloured-icon">
-          <i class="icon fa fa-files-o fa-3x"></i>
-          <div class="info">
-            <h4>Archivez</h4>
-            <p><b>10</b></p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-3">
-        <div class="widget-small danger coloured-icon">
-          <i class="icon fa fa-star fa-3x"></i>
-          <div class="info">
-            <h4></h4>
-            <p><b></b></p>
-          </div>
-        </div>
-      </div>
-    </div>
     </main>
     </body>
       </div>

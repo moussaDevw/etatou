@@ -4,6 +4,7 @@ import { LayoutAdmin } from '../LayoutAdmin'
 
 export const ListBoutiqueActif = () =>{
     const [boutiques,setBoutique] = useState([])
+    const [v,setV] = useState(true)
     useEffect(()=>{
         axios({
             method:'GET',
@@ -49,18 +50,18 @@ export const ListBoutiqueActif = () =>{
                        boutiques.map(boutique=>{
                            if(boutique.is_celler === true){
                                return(
-                                   <Fragment>
+                                   <tr>
                                        <td>{boutique.id}</td>
                                        <td>{boutique.user_name}</td>
                                        <td>{boutique.nom_boutique}</td>
                                        <td>{boutique.is_celler ? 'Active' : 'Desactive'}</td>
                                        <td class="toggle-flip">
                                             <label>
-                                            <input type="checkbox" /><span class="flip-indecator" data-toggle-on="ON"
+                                            <input type="checkbox"/><span class="flip-indecator" data-toggle-on="ON"
                                                         data-toggle-off="OFF"></span>
                                             </label>
                                         </td>
-                                   </Fragment>
+                                   </tr>
                                )
                            }
                        })

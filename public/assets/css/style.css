@@ -2,7 +2,7 @@
     Template Name: eStore
     Author URI: graygrids.com
     Author: GrayGrids
-
+.navbar-style-7 .navbar-container .main-navbar .navbar-menu .main-menu li a
 -----------------------------------------------------------------------------------
 
     CSS INDEX
@@ -12,7 +12,7 @@
 	02. Header
     03. Hero
 	04. Footer
-
+img
 -----------------------------------------------------------------------------------*/
 /*==================================================================
                             01.Common css
@@ -504,7 +504,7 @@ p {
 .bg-gray-4 {
   background-color: #EFEFEF;
 }
-
+/* .product-style-1 .product-content */
 /*========== Primary Shades Color =========*/
 .primary-1 {
   color: #0009D1;
@@ -519,7 +519,7 @@ p {
 }
 
 .primary-4 {
-  color: #754FF1;
+  color: 0190f9;
 }
 
 .primary-5 {
@@ -547,7 +547,7 @@ p {
 }
 
 .bg-primary-4 {
-  background-color: #754FF1;
+  background-color: #0190f9;
 }
 
 .bg-primary-5 {
@@ -2575,6 +2575,7 @@ p {
 
 /*==================================================================
                    19. Product css
+                   .product-style-1 .product-image .product-active .product-item img
 ==================================================================*/
 /*===== All Product Style 1 =====*/
 .product-style-1 .product-image {
@@ -2583,6 +2584,7 @@ p {
 
 .product-style-1 .product-image .product-active .product-item img {
   width: 100%;
+  height: 300px;
 }
 
 .product-style-1 .product-image .product-active .slick-arrow {
@@ -2654,10 +2656,22 @@ p {
   }
 }
 
-@media (max-width: 767px) {
+@media (width: 768px) {
   .product-style-1 .product-content {
-    margin: -50px 22px 0;
+    margin: -50px 0px 0;
     padding: 20px 10px 25px;
+  }
+  .product-style-1 .product-image .product-active .product-item img{
+    height: 200px;
+  }
+}
+@media (max-width: 540px) {
+  .product-style-1 .product-content {
+    margin: -50px 0px 0;
+    padding: 20px 10px 25px;
+  }
+  .product-style-1 .product-image .product-active .product-item img{
+    height: 200px;
   }
 }
 
@@ -2829,6 +2843,7 @@ p {
 .product-style-7 .product-content .product-meta li + li {
   margin-left: 16px;
 }
+/* .product-style-1 .product-content */
 
 .product-style-7 .product-content .product-meta li a {
   color: #4C4C4C;
@@ -4747,7 +4762,6 @@ p {
     position: relative !important;
   }
 }
-
 @media (max-width: 767px) {
   .navbar-style-7 .navbar-container .main-navbar .navbar-menu .main-menu li.position-static {
     position: relative !important;
@@ -4761,8 +4775,7 @@ p {
   font-size: 16px;
   text-transform: uppercase;
   font-weight: 500;
-  -webkit-transition: all 0.3s linear;
-  transition: all 0.3s linear;
+  
   border-radius: 4px;
 }
 
@@ -7165,7 +7178,7 @@ p {
 .reviews-style .reviews-comment .comment-items .single-review-comment .comment-user-text .comment-image .image {
   padding-top: 8px;
 }
-
+bg-primary-4
 .reviews-style .reviews-comment .comment-items .single-review-comment .comment-user-text .comment-image .image + .image {
   margin-left: 8px;
 }

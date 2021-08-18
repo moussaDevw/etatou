@@ -1,175 +1,143 @@
-import React, { Fragment } from 'react'
-import { Link } from 'react-router-dom'
-
-export const ProduitDetails = () => {
+import axios from 'axios'
+import React, { Fragment, useEffect, useState } from 'react'
+import { Link, useParams } from 'react-router-dom'
+import {addItem} from '../Boutique/cardHelpers'
+import { Layout } from '../menu/Layout'
+export const ProduitDetails = (props) => {
+    const [product,setProduct] = useState([])
+    const [value,setValue] = useState(1)
+    let {id} = useParams()
+    useEffect(()=>{
+        axios({
+            method:'GET',
+            url:`https://apptatout.herokuapp.com/produit/list/${id}/`
+        })
+        .then(response=>{
+            setProduct(response.data)
+        })
+        .catch(e=>console.log(e))
+    },[])
     return(
         <Fragment>
-            <section class="breadcrumbs-wrapper pt-50 pb-50 bg-primary-4">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="breadcrumbs-style breadcrumbs-style-1 d-md-flex justify-content-between align-items-center">
-                            <div class="breadcrumb-left">
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><Link to="/">Acceuil</Link></li>
-                                    <li class="breadcrumb-item active" aria-current="page"></li>
-                                </ol>
+            <Layout />
+            <section className="breadcrumbs-wrapper pt-50 pb-50 bg-primary-4">
+        <div className="container">
+            <div className="row">
+                <div className="col-lg-12">
+                    <div className="breadcrumbs-style breadcrumbs-style-1 d-md-flex justify-content-between align-items-center">
+                        <div className="breadcrumb-left">
+                            <ol className="breadcrumb">
+                                <li className="breadcrumb-item"><Link to="/">Acceuil</Link></li>
+                                <li className="breadcrumb-item active" aria-current="page">détails du produit</li>
+                            </ol>
+                        </div>
+                        <div className="breadcrumb-right">
+                            <h5 className="heading-5 font-weight-500">détails du produit</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section className="product-details-wrapper pt-50 pb-100 mb-4">
+        <div className="container">
+            <div className="product-details-style-1">
+                <div className="row flex-lg-row-reverse align-items-center">
+                    <div className="col-lg-6">
+                        <div className="product-details-image mt-50">
+                            <div className="product-image">
+                                <div className="product-image-active-1">
+                                    <div className="single-image">
+                                        <img src={"https://apptatout.herokuapp.com"+product.photo} alt="product" />
+                                    </div>
+                                    <div className="single-image">
+                                        <img src={"https://apptatout.herokuapp.com"+product.photo2} alt="product" />
+                                    </div>
+                                    <div className="single-image">
+                                        <img src={"https://apptatout.herokuapp.com"+product.photo3} alt="product" />
+                                    </div>
+                                    <div className="single-image">
+                                        <img src={"https://apptatout.herokuapp.com"+product.photo4} alt="product" />
+                                    </div>
+                                    <div className="single-image">
+                                        <img src={"https://apptatout.herokuapp.com"+product.photo5} alt="product" />
+                                    </div>
+                                </div>
                             </div>
-                            <div class="breadcrumb-right">
-                                <h5 class="heading-5 font-weight-500">Détails du produit</h5>
+                            <div className="product-thumb-image">
+                                <div className="product-thumb-image-active-1">
+                                    <div className="single-thumb">
+                                        <img src={"https://apptatout.herokuapp.com"+product.photo} alt="product" />
+                                    </div>
+                                    <div className="single-thumb">
+                                        <img src={"https://apptatout.herokuapp.com"+product.photo2} alt="product" />
+                                    </div>
+                                    <div className="single-thumb">
+                                        <img src={"https://apptatout.herokuapp.com"+product.photo3} alt="product" />
+                                    </div>
+                                    <div className="single-thumb">
+                                        <img src={"https://apptatout.herokuapp.com"+product.photo4} alt="product" />
+                                    </div>
+                                    <div className="single-thumb">
+                                        <img src={"https://apptatout.herokuapp.com"+product.photo5} alt="product" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-lg-6">
+                        <div className="product-details-content mt-45">
+                            <h2 className="title">{product.designation}</h2>
+    
+                            <div className="product-items flex-wrap">
+                                <h6 className="item-title"> </h6>
+                                <div className="items-wrapper">
+                                    <div className="single-item active">
+                                        <div className="items-image">
+                                            <img src={"https://apptatout.herokuapp.com"+product.photo} alt="product" />
+                                        </div>
+                                        <p className="text"></p>
+                                    </div>
+                                    <div className="single-item">
+                                        <div className="items-image">
+                                            <img src={"https://apptatout.herokuapp.com"+product.photo2} alt="product" />
+                                        </div>
+                                        <p className="text"></p>
+                                    </div>
+                                    <div className="single-item">
+                                        <div className="items-image">
+                                            <img src={"https://apptatout.herokuapp.com"+product.photo3} alt="product" />
+                                        </div>
+                                        <p className="text"></p>
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <div className="product-select-wrapper flex-wrap">
+                                <div className="select-item">
+                                    <h6 className="select-title">Sélectionnez la quantité: </h6>
+        
+                                    <div className="select-quantity">
+                                        <button onClick={()=>setValue(value <=1 ? 1 : value - 1)} type="button"><i className="mdi mdi-minus"></i></button>
+                                        <input type="text" value={value} />
+                                        <button onClick={()=>setValue(value + 1)} type="button"><i className="mdi mdi-plus"></i></button>
+                                    </div>
+                                    <h1 className="text-center">{value * product.prix} FCFA </h1>
+                                </div>
+                            </div>
+                            <div className="product-btn">
+                                <Link to="#" onClick={()=>addItem(product,value,product.prix)} className="main-btn primary-btn">
+                                    <img src="assets/images/icon-svg/cart-4.svg" alt="" />
+                                    AJOUTER AU PANIER
+                                </Link>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            </section>
-            <section class="product-details-wrapper pt-50 pb-100">
-            <div class="container">
-                <div class="product-details-style-1">
-                    <div class="row flex-lg-row-reverse align-items-center">
-                        <div class="col-lg-6">
-                            <div class="product-details-image mt-50">
-                                <div class="product-image">
-                                    <div class="product-image-active-1">
-                                        <div class="single-image">
-                                            <img src="assets/images/product-details-1/product-1.jpg" alt="" />
-                                        </div>
-                                        <div class="single-image">
-                                            <img src="assets/images/product-details-1/product-2.jpg" alt="" />
-                                        </div>
-                                        <div class="single-image">
-                                            <img src="assets/images/product-details-1/product-3.jpg" alt="" />
-                                        </div>
-                                        <div class="single-image">
-                                            <img src="assets/images/product-details-1/product-4.jpg" alt="" />
-                                        </div>
-                                        <div class="single-image">
-                                            <img src="assets/images/product-details-1/product-5.jpg" alt="" />
-                                        </div>
-                                        <div class="single-image">
-                                            <img src="assets/images/product-details-1/product-3.jpg" alt="" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="product-thumb-image">
-                                    <div class="product-thumb-image-active-1">
-                                        <div class="single-thumb">
-                                            <img src="assets/images/product-details-1/thunb-1.jpg" alt="" />
-                                        </div>
-                                        <div class="single-thumb">
-                                            <img src="assets/images/product-details-1/thunb-2.jpg" alt="" />
-                                        </div>
-                                        <div class="single-thumb">
-                                            <img src="assets/images/product-details-1/thunb-3.jpg" alt="" />
-                                        </div>
-                                        <div class="single-thumb">
-                                            <img src="assets/images/product-details-1/thunb-4.jpg" alt="" />
-                                        </div>
-                                        <div class="single-thumb">
-                                            <img src="assets/images/product-details-1/thunb-5.jpg" alt="" />
-                                        </div>
-                                        <div class="single-thumb">
-                                            <img src="assets/images/product-details-1/thunb-3.jpg" alt="" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="product-details-content mt-45">
-                                <p class="sub-title">All-In-One VR</p>
-                                <h2 class="title">Oculus VR</h2>
-        
-                                <div class="product-items flex-wrap">
-                                    <h6 class="item-title">Select Your Oculus: </h6>
-                                    <div class="items-wrapper">
-                                        <div class="single-item active">
-                                            <div class="items-image">
-                                                <img src="assets/images/product-details-1/product-items-1.jpg" alt="product" />
-                                            </div>
-                                            <p class="text">Oculus Go</p>
-                                        </div>
-                                        <div class="single-item">
-                                            <div class="items-image">
-                                                <img src="assets/images/product-details-1/product-items-2.jpg" alt="product" />
-                                            </div>
-                                            <p class="text">Oculus Quest</p>
-                                        </div>
-                                        <div class="single-item">
-                                            <div class="items-image">
-                                                <img src="assets/images/product-details-1/product-items-3.jpg" alt="product" />
-                                            </div>
-                                            <p class="text">Oculus Rift S</p>
-                                        </div>
-                                    </div>
-                                </div>
-        
-                                <div class="product-select-wrapper flex-wrap">
-                                    <div class="select-item">
-                                        <h6 class="select-title">Select Color: <span>Grey</span></h6>
-                                        <ul class="color-select">
-                                            <li class="active" data-color="#EFEFEF"></li>
-                                            <li data-color="#FAE5EC"></li>
-                                            <li data-color="#4C4C4C"></li>
-                                        </ul>
-                                    </div>
-                                    <div class="select-item">
-                                        <h6 class="select-title">Memory (GB): </h6>
-                                        <div class="size-select">
-                                            <select>
-                                                <option value="">32gb</option>
-                                                <option value="">64gb</option>
-                                                <option value="">128 gb</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="select-item">
-                                        <h6 class="select-title">Select Quantity: </h6>
-        
-                                        <div class="select-quantity">
-                                            <button type="button" id="sub" class="sub"><i class="mdi mdi-minus"></i></button>
-                                            <input type="text" value="1" />
-                                            <button type="button" id="add" class="add"><i class="mdi mdi-plus"></i></button>
-                                        </div>
-                                    </div>
-                                    <div class="select-item">
-                                        <h6 class="select-title">Select Shipping Country: </h6>
-                                        <div class="country-select">
-                                            <select>
-                                                <option value="0">-- Select Country --</option>
-                                                <option value="1">Bangladesh</option>
-                                                <option value="2">india</option>
-                                                <option value="3">Pakistan</option>
-                                                <option value="4">Australia</option>
-                                                <option value="5">Canada</option>
-                                                <option value="6">Spain</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-        
-                                <div class="product-price">
-                                    <h6 class="price-title">Price: </h6>
-                                    <p class="sale-price">$ 149 USD</p>
-                                    <p class="regular-price">$ 179 USD</p>
-                                </div>
-        
-                                <div class="product-btn">
-                                    <a href="javascript:void(0)" class="main-btn primary-btn">
-                                        <img src="assets/images/icon-svg/cart-4.svg" alt="" />
-                                        Add to cart
-                                    </a>
-                                    <a href="javascript:void(0)" class="main-btn secondary-1-btn">
-                                        <img src="assets/images/icon-svg/cart-8.svg" alt="" />
-                                        Buy Now
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        </div>
+    </section>
+   
         </Fragment>
     )
 }
